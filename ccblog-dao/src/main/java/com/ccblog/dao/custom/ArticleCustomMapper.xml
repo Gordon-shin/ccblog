@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccblog.dao.custom.ArticleCustomMapper">
+    <resultMap id="articleDetail" type="com.ccblog.pojo.vo.ArticleCustom">
+        <id column="article_id" property="articleId" jdbcType="INTEGER" />
+        <result column="article_user_id" property="articleUserId" jdbcType="INTEGER" />
+        <result column="article_title" property="articleTitle" jdbcType="VARCHAR" />
+        <result column="article_parent_category_id" property="articleParentCategoryId" jdbcType="INTEGER" />
+        <result column="article_child_category_id" property="articleChildCategoryId" jdbcType="INTEGER" />
+        <result column="article_tag_ids" property="articleTagIds" jdbcType="VARCHAR" />
+        <result column="article_view_count" property="articleViewCount" jdbcType="INTEGER" />
+        <result column="article_comment_count" property="articleCommentCount" jdbcType="INTEGER" />
+        <result column="article_like_count" property="articleLikeCount" jdbcType="INTEGER" />
+        <result column="article_post_time" property="articlePostTime" jdbcType="TIMESTAMP" />
+        <result column="article_update_time" property="articleUpdateTime" jdbcType="TIMESTAMP" />
+        <result column="article_is_comment" property="articleIsComment" jdbcType="INTEGER" />
+        <result column="article_content" property="articleContent" jdbcType="LONGVARCHAR" />
+    </resultMap>
+
+    <!--获得文章总数-->
+    <select id="getArticleTotalNum" resultType="Integer">
+
+        select COUNT(1) from article where article_status = 1;
+
+    </select>
+
+
+    <!--获得后台管理首页展示的最新5篇文章-->
+    <select id="getArticleListForIndex" resultType="com.ccblog.pojo.vo.ArticleCustom" >
+
+        SELECT
+        a.article_id AS articleId,
+        a.article_title AS articleTitle,
+        u.user_nickname AS articleAuthorName,
+        a.article_post_time AS articlePostTime
+        from article a
+        LEFT JOIN user u ON a.article_user_id = u.user_id
+        WHERE article_status = 1
+        ORDER BY a.article_post_time desc
+        LIMIT 0,5;
+
+    </select>
+
+    <!--后台全部文章模块显示文章列表-->
+    <select id="getArticleListForAdmin" resultType="com.ccblog.pojo.vo.ArticleCustom" >
+
+        SELECT
+        a.article_id AS articleId,
+        a.article_title AS articleTitle,
+        a.article_parent_category_id AS articleParentCategoryId,
+        a.article_child_category_id AS articleChildCategoryId,
+        a.article_tag_ids AS articleTagIds,
+        a.article_user_id AS articleUserId,
+        a.article_post_time AS articlePostTime,
+        a.article_update_time AS articleUpdateTime
+        from article a
+        WHERE a.article_status = 1
+        ORDER BY a.article_status ASC, a.article_post_time desc
+
+    </select>
+
+    <select id="getAllAraftsArticleForAdmin" resultType="com.ccblog.pojo.vo.ArticleCustom" >
+
+        SELECT
+        a.article_id AS articleId,
+        a.article_title AS articleTitle,
+        a.article_parent_category_id AS articleParentCategoryId,
+        a.article_child_category_id AS articleChildCategoryId,
+        a.article_tag_ids AS articleTagIds,
+        a.article_user_id AS articleUserId,
+        a.article_post_time AS articlePostTime,
+        a.article_update_time AS articleUpdateTime
+        from article a
+        WHERE a.article_status = 0
+        ORDER BY a.article_status ASC, a.article_post_time desc
+
+    </select>
+
+    <!--获得文章列表用来前台首页展示-->
+    <select id="getArticleListForPortalIndex" resultType="com.ccblog.pojo.vo.ArticleCustom">
+        SELECT
+        a.article_id AS articleId,
+        a.article_title AS articleTitle,
+        a.article_content AS articleContent,
+        a.article_parent_category_id AS articleParentCategoryId,
+        a.article_child_category_id AS articleChildCategoryId,
+        a.article_tag_ids AS articleTagIds,
+        a.article_user_id AS articleUserId,
+        a.article_view_count AS articleViewCount,
+        a.article_comment_count AS articleCommentCount,
+        a.article_post_time AS articlePostTime
+        from article a
+        WHERE a.article_status = 1
+        ORDER BY a.article_status ASC, a.article_post_time desc
+    </select>
+
+    <!--根据分类获取文章List-->
+    <select id="getArticleListByCategory" resultType="com.ccblog.pojo.vo.ArticleCustom">
+        SELECT
+        a.article_id AS articleId,
+        a.article_title AS articleTitle,
+        a.article_content AS articleContent,
+        a.article_parent_category_id AS articleParentCategoryId,
+        a.article_child_category_id AS articleChildCategoryId,
+        a.article_tag_ids AS articleTagIds,
+        a.article_user_id AS articleUserId,
+        a.article_view_count AS articleViewCount,
+        a.article_comment_count AS articleCommentCount,
+        a.article_post_time AS articlePostTime
+        from article a
+        WHERE a.article_status = 1
+        AND
+        a.article_parent_category_id=#{categoryId} OR
+        a.article_child_category_id=#{categoryId}
+        ORDER BY a.article_status ASC, a.article_post_time desc
+    </select>
+
+
+    <!--根据标签获取文章List-->
+    <select id="getArticleListByTag" resultType="com.ccblog.pojo.vo.ArticleCustom">
+        SELECT
+        a.article_id AS articleId,
+        a.article_title AS articleTitle,
+        a.article_content AS articleContent,
+        a.article_parent_category_id AS articleParentCategoryId,
+        a.article_child_category_id AS articleChildCategoryId,
+        a.article_tag_ids AS articleTagIds,
+        a.article_user_id AS articleUserId,
+        a.article_view_count AS articleViewCount,
+        a.article_comment_count AS articleCommentCount,
+        a.article_post_time AS articlePostTime
+        from article a
+        WHERE a.article_status = 1
+        AND
+           a.article_tag_ids = #{tagId} OR
+           a.article_tag_ids LIKE "${tagId},%" OR
+           a.article_tag_ids LIKE "%,${tagId},%" OR
+           a.article_tag_ids LIKE "%,${tagId}"
+        ORDER BY a.article_status ASC, a.article_post_time desc
+    </select>
+
+    <!--根据根据搜索获得文章List-->
+    <select id="searchArticleForPortal" resultType="com.ccblog.pojo.vo.ArticleCustom">
+        SELECT
+        a.article_id AS articleId,
+        a.article_title AS articleTitle,
+        a.article_content AS articleContent,
+        a.article_post_time AS articlePostTime
+        from article a
+        WHERE a.article_status = 1
+        AND
+            a.article_title LIKE '%${query}%' OR
+            a.article_content LIKE '%${query}%'
+        ORDER BY a.article_status ASC, a.article_post_time desc
+    </select>
+
+    <!--查找有几篇文章用了此tag标签-->
+    <select id="countArticleByTag" resultType="Integer">
+        SELECT count(*)
+        FROM  article
+        <where>
+            article.article_tag_ids = #{tagId} OR
+            article.article_tag_ids LIKE "${tagId},%" OR
+            article.article_tag_ids LIKE "%,${tagId},%" OR
+            article.article_tag_ids LIKE "%,${tagId}"
+        </where>
+    </select>
+
+    <!--查看有几篇文章在此分类下-->
+    <select id="countArticleByCategory" resultType="Integer">
+        SELECT count(*)
+        FROM  article
+        <where>
+            article_parent_category_id=#{categoryId} OR
+            article_child_category_id=#{categoryId}
+        </where>
+    </select>
+
+    <!--获得最新更新的那篇文章-->
+    <select id="getLastUpdateArticle" resultType="com.ccblog.pojo.vo.ArticleCustom">
+        SELECT
+        article_update_time AS articleUpdateTime
+        FROM article
+        WHERE article_update_time=
+        (
+        SELECT max(article_update_time) FROM article
+        )
+
+    </select>
+
+    <!--获得随机文章-->
+    <select id="getRandomArticleList" resultType="com.ccblog.pojo.po.Article">
+        SELECT
+        article_id AS articleId,
+        article_title AS articleTitle
+        FROM
+        article
+        WHERE article_status = 1
+        ORDER BY
+        RAND()
+        limit 5
+    </select>
+
+    <!--获得文章总评论数-->
+    <select id="coutCommentForPortal" resultType="Integer">
+        SELECT SUM(article_comment_count) FROM article
+    </select>
+
+
+    <!--获得文章总浏览数-->
+    <select id="countArticleView" resultType="Integer">
+        SELECT SUM(article_view_count) FROM article
+    </select>
+
+
+    <!--查询展示前台文章详情页-->
+    <select id="getArticleDetailByIdForPortal" resultType="com.ccblog.pojo.vo.ArticleCustom">
+        SELECT
+        a.article_id AS articleId,
+        a.article_title AS articleTitle,
+        a.article_content AS articleContent,
+        a.article_parent_category_id AS articleParentCategoryId,
+        a.article_child_category_id AS articleChildCategoryId,
+        a.article_tag_ids AS articleTagIds,
+        a.article_user_id AS articleUserId,
+        a.article_view_count AS articleViewCount,
+        a.article_comment_count AS articleCommentCount,
+        a.article_post_time AS articlePostTime,
+        a.article_like_count AS articleLikeCount
+        from article a
+        WHERE a.article_id = #{articleId}
+    </select>
+
+    <!--获得下一篇文章-->
+    <select id="getNextArticle" resultType="com.ccblog.pojo.vo.ArticleCustom">
+        SELECT
+        a.article_id AS articleId,
+        a.article_title AS articleTitle
+        from article a
+        WHERE a.article_id > #{articleId}
+        AND a.article_status=1
+        ORDER BY a.article_id
+        limit 1
+    </select>
+
+    <!--获得下一篇文章-->
+    <select id="getPreviousArticle" resultType="com.ccblog.pojo.vo.ArticleCustom">
+        SELECT
+        a.article_id AS articleId,
+        a.article_title AS articleTitle
+        from article a
+        WHERE a.article_id &lt; #{articleId}
+        AND a.article_status=1
+        ORDER BY a.article_id
+        limit 1
+    </select>
+
+    <!--前台，文章归档-->
+    <select id="articleGuiDang" resultType="com.ccblog.pojo.vo.ArticleCustom">
+      SELECT
+      a.article_id AS articleId,
+      a.article_title AS articleTitle,
+      a.article_post_time AS articlePostTime
+      FROM article a
+      WHERE article_status = 1
+      ORDER BY a.article_id DESC
+    </select>
+
+</mapper>

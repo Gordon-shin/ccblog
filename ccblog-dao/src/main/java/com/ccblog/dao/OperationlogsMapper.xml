@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ccblog.dao.OperationlogsMapper" >
+  <resultMap id="BaseResultMap" type="com.ccblog.pojo.po.Operationlogs" >
+    <id column="oplog_id" property="oplogId" jdbcType="INTEGER" />
+    <result column="oplog_ip" property="oplogIp" jdbcType="VARCHAR" />
+    <result column="oplog_operation" property="oplogOperation" jdbcType="VARCHAR" />
+    <result column="oplog_area" property="oplogArea" jdbcType="VARCHAR" />
+    <result column="oplog_computer" property="oplogComputer" jdbcType="VARCHAR" />
+    <result column="oplog_browser" property="oplogBrowser" jdbcType="VARCHAR" />
+    <result column="oplog_create_time" property="oplogCreateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    oplog_id, oplog_ip, oplog_operation, oplog_area, oplog_computer, oplog_browser, oplog_create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ccblog.pojo.po.OperationlogsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from operationlogs
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from operationlogs
+    where oplog_id = #{oplogId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from operationlogs
+    where oplog_id = #{oplogId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ccblog.pojo.po.OperationlogsExample" >
+    delete from operationlogs
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ccblog.pojo.po.Operationlogs" >
+    insert into operationlogs (oplog_id, oplog_ip, oplog_operation, 
+      oplog_area, oplog_computer, oplog_browser, 
+      oplog_create_time)
+    values (#{oplogId,jdbcType=INTEGER}, #{oplogIp,jdbcType=VARCHAR}, #{oplogOperation,jdbcType=VARCHAR}, 
+      #{oplogArea,jdbcType=VARCHAR}, #{oplogComputer,jdbcType=VARCHAR}, #{oplogBrowser,jdbcType=VARCHAR}, 
+      #{oplogCreateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ccblog.pojo.po.Operationlogs" >
+    insert into operationlogs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oplogId != null" >
+        oplog_id,
+      </if>
+      <if test="oplogIp != null" >
+        oplog_ip,
+      </if>
+      <if test="oplogOperation != null" >
+        oplog_operation,
+      </if>
+      <if test="oplogArea != null" >
+        oplog_area,
+      </if>
+      <if test="oplogComputer != null" >
+        oplog_computer,
+      </if>
+      <if test="oplogBrowser != null" >
+        oplog_browser,
+      </if>
+      <if test="oplogCreateTime != null" >
+        oplog_create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oplogId != null" >
+        #{oplogId,jdbcType=INTEGER},
+      </if>
+      <if test="oplogIp != null" >
+        #{oplogIp,jdbcType=VARCHAR},
+      </if>
+      <if test="oplogOperation != null" >
+        #{oplogOperation,jdbcType=VARCHAR},
+      </if>
+      <if test="oplogArea != null" >
+        #{oplogArea,jdbcType=VARCHAR},
+      </if>
+      <if test="oplogComputer != null" >
+        #{oplogComputer,jdbcType=VARCHAR},
+      </if>
+      <if test="oplogBrowser != null" >
+        #{oplogBrowser,jdbcType=VARCHAR},
+      </if>
+      <if test="oplogCreateTime != null" >
+        #{oplogCreateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ccblog.pojo.po.OperationlogsExample" resultType="java.lang.Integer" >
+    select count(*) from operationlogs
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update operationlogs
+    <set >
+      <if test="record.oplogId != null" >
+        oplog_id = #{record.oplogId,jdbcType=INTEGER},
+      </if>
+      <if test="record.oplogIp != null" >
+        oplog_ip = #{record.oplogIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oplogOperation != null" >
+        oplog_operation = #{record.oplogOperation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oplogArea != null" >
+        oplog_area = #{record.oplogArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oplogComputer != null" >
+        oplog_computer = #{record.oplogComputer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oplogBrowser != null" >
+        oplog_browser = #{record.oplogBrowser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oplogCreateTime != null" >
+        oplog_create_time = #{record.oplogCreateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update operationlogs
+    set oplog_id = #{record.oplogId,jdbcType=INTEGER},
+      oplog_ip = #{record.oplogIp,jdbcType=VARCHAR},
+      oplog_operation = #{record.oplogOperation,jdbcType=VARCHAR},
+      oplog_area = #{record.oplogArea,jdbcType=VARCHAR},
+      oplog_computer = #{record.oplogComputer,jdbcType=VARCHAR},
+      oplog_browser = #{record.oplogBrowser,jdbcType=VARCHAR},
+      oplog_create_time = #{record.oplogCreateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ccblog.pojo.po.Operationlogs" >
+    update operationlogs
+    <set >
+      <if test="oplogIp != null" >
+        oplog_ip = #{oplogIp,jdbcType=VARCHAR},
+      </if>
+      <if test="oplogOperation != null" >
+        oplog_operation = #{oplogOperation,jdbcType=VARCHAR},
+      </if>
+      <if test="oplogArea != null" >
+        oplog_area = #{oplogArea,jdbcType=VARCHAR},
+      </if>
+      <if test="oplogComputer != null" >
+        oplog_computer = #{oplogComputer,jdbcType=VARCHAR},
+      </if>
+      <if test="oplogBrowser != null" >
+        oplog_browser = #{oplogBrowser,jdbcType=VARCHAR},
+      </if>
+      <if test="oplogCreateTime != null" >
+        oplog_create_time = #{oplogCreateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where oplog_id = #{oplogId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ccblog.pojo.po.Operationlogs" >
+    update operationlogs
+    set oplog_ip = #{oplogIp,jdbcType=VARCHAR},
+      oplog_operation = #{oplogOperation,jdbcType=VARCHAR},
+      oplog_area = #{oplogArea,jdbcType=VARCHAR},
+      oplog_computer = #{oplogComputer,jdbcType=VARCHAR},
+      oplog_browser = #{oplogBrowser,jdbcType=VARCHAR},
+      oplog_create_time = #{oplogCreateTime,jdbcType=TIMESTAMP}
+    where oplog_id = #{oplogId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccblog.dao.custom.CommentIndexCutomMapper">
+
+        <!--获得所有评论总数-->
+
+        <select id="getCommentTotalNum" resultType="Integer">
+
+            select COUNT(1) from comment where comment_status = 1;
+
+        </select>
+
+
+    <!--获得后台管理首页展示的最新5条评论-->
+        <select id="getCommentListForIndex" resultType="com.ccblog.pojo.vo.CommentCustom">
+            SELECT c.comment_id AS commentId,
+            c.comment_user_name AS commentUserName,
+            c.comment_content AS commentContent,
+            c.comment_create_time AS commentCreateTime,
+            a.article_title AS articleTitle
+            from comment c LEFT JOIN article a on c.comment_article_id = a.article_id
+            WHERE comment_status = 1
+            ORDER BY comment_create_time DESC
+            LIMIT 0,5;
+        </select>
+
+
+        <!--获得文章详情下的所有评论-->
+        <select id="listCommentByArticleId" resultType="com.ccblog.pojo.vo.CommentCustom">
+
+                SELECT
+                c.comment_id AS commentId,
+                c.comment_pid AS commentPid,
+                c.comment_pname AS commentPname,
+                c.comment_article_id AS commentArticleId,
+                c.comment_user_name AS commentUserName,
+                c.comment_user_email AS commentUserEmail,
+                c.comment_user_url AS commentUserUrl,
+                c.comment_content AS commentContent,
+                c.comment_agent AS commentAgent,
+                c.comment_ip AS commentIp,
+                c.comment_create_time AS commentCreateTime,
+                c.comment_role AS commentRole,
+                c.comment_status AS commentStatus
+                FROM
+                comment c
+                WHERE
+                c.comment_article_id=#{id}
+                AND c.comment_status=1
+                ORDER BY c.comment_id ASC
+
+
+        </select>
+
+
+    <update id="updateCommentCountsForArticle" parameterType="Integer">
+        UPDATE article
+        SET article_comment_count=
+        (
+        SELECT count(*) FROM comment
+        WHERE article.article_id=comment.comment_article_id AND comment_status=1
+        )
+        WHERE article_id=#{articleId}
+    </update>
+</mapper>

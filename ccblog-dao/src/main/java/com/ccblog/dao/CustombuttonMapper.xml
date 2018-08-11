@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ccblog.dao.CustombuttonMapper" >
+  <resultMap id="BaseResultMap" type="com.ccblog.pojo.po.Custombutton" >
+    <id column="custombutton_id" property="custombuttonId" jdbcType="INTEGER" />
+    <result column="custombutton_name" property="custombuttonName" jdbcType="VARCHAR" />
+    <result column="custombutton_url" property="custombuttonUrl" jdbcType="VARCHAR" />
+    <result column="custombutton_level" property="custombuttonLevel" jdbcType="INTEGER" />
+    <result column="custombutton_icon" property="custombuttonIcon" jdbcType="VARCHAR" />
+    <result column="custombutton_status" property="custombuttonStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    custombutton_id, custombutton_name, custombutton_url, custombutton_level, custombutton_icon, 
+    custombutton_status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ccblog.pojo.po.CustombuttonExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from custombutton
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from custombutton
+    where custombutton_id = #{custombuttonId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from custombutton
+    where custombutton_id = #{custombuttonId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ccblog.pojo.po.CustombuttonExample" >
+    delete from custombutton
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ccblog.pojo.po.Custombutton" >
+    insert into custombutton (custombutton_id, custombutton_name, 
+      custombutton_url, custombutton_level, custombutton_icon, 
+      custombutton_status)
+    values (#{custombuttonId,jdbcType=INTEGER}, #{custombuttonName,jdbcType=VARCHAR}, 
+      #{custombuttonUrl,jdbcType=VARCHAR}, #{custombuttonLevel,jdbcType=INTEGER}, #{custombuttonIcon,jdbcType=VARCHAR}, 
+      #{custombuttonStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ccblog.pojo.po.Custombutton" >
+    insert into custombutton
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="custombuttonId != null" >
+        custombutton_id,
+      </if>
+      <if test="custombuttonName != null" >
+        custombutton_name,
+      </if>
+      <if test="custombuttonUrl != null" >
+        custombutton_url,
+      </if>
+      <if test="custombuttonLevel != null" >
+        custombutton_level,
+      </if>
+      <if test="custombuttonIcon != null" >
+        custombutton_icon,
+      </if>
+      <if test="custombuttonStatus != null" >
+        custombutton_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="custombuttonId != null" >
+        #{custombuttonId,jdbcType=INTEGER},
+      </if>
+      <if test="custombuttonName != null" >
+        #{custombuttonName,jdbcType=VARCHAR},
+      </if>
+      <if test="custombuttonUrl != null" >
+        #{custombuttonUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="custombuttonLevel != null" >
+        #{custombuttonLevel,jdbcType=INTEGER},
+      </if>
+      <if test="custombuttonIcon != null" >
+        #{custombuttonIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="custombuttonStatus != null" >
+        #{custombuttonStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ccblog.pojo.po.CustombuttonExample" resultType="java.lang.Integer" >
+    select count(*) from custombutton
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update custombutton
+    <set >
+      <if test="record.custombuttonId != null" >
+        custombutton_id = #{record.custombuttonId,jdbcType=INTEGER},
+      </if>
+      <if test="record.custombuttonName != null" >
+        custombutton_name = #{record.custombuttonName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custombuttonUrl != null" >
+        custombutton_url = #{record.custombuttonUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custombuttonLevel != null" >
+        custombutton_level = #{record.custombuttonLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.custombuttonIcon != null" >
+        custombutton_icon = #{record.custombuttonIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custombuttonStatus != null" >
+        custombutton_status = #{record.custombuttonStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update custombutton
+    set custombutton_id = #{record.custombuttonId,jdbcType=INTEGER},
+      custombutton_name = #{record.custombuttonName,jdbcType=VARCHAR},
+      custombutton_url = #{record.custombuttonUrl,jdbcType=VARCHAR},
+      custombutton_level = #{record.custombuttonLevel,jdbcType=INTEGER},
+      custombutton_icon = #{record.custombuttonIcon,jdbcType=VARCHAR},
+      custombutton_status = #{record.custombuttonStatus,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ccblog.pojo.po.Custombutton" >
+    update custombutton
+    <set >
+      <if test="custombuttonName != null" >
+        custombutton_name = #{custombuttonName,jdbcType=VARCHAR},
+      </if>
+      <if test="custombuttonUrl != null" >
+        custombutton_url = #{custombuttonUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="custombuttonLevel != null" >
+        custombutton_level = #{custombuttonLevel,jdbcType=INTEGER},
+      </if>
+      <if test="custombuttonIcon != null" >
+        custombutton_icon = #{custombuttonIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="custombuttonStatus != null" >
+        custombutton_status = #{custombuttonStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where custombutton_id = #{custombuttonId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ccblog.pojo.po.Custombutton" >
+    update custombutton
+    set custombutton_name = #{custombuttonName,jdbcType=VARCHAR},
+      custombutton_url = #{custombuttonUrl,jdbcType=VARCHAR},
+      custombutton_level = #{custombuttonLevel,jdbcType=INTEGER},
+      custombutton_icon = #{custombuttonIcon,jdbcType=VARCHAR},
+      custombutton_status = #{custombuttonStatus,jdbcType=INTEGER}
+    where custombutton_id = #{custombuttonId,jdbcType=INTEGER}
+  </update>
+</mapper>

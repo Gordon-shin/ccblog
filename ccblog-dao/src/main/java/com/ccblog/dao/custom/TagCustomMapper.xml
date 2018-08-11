@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccblog.dao.custom.TagCustomMapper">
+
+    <select id="getTagCustomList" resultType="com.ccblog.pojo.vo.TagCustom">
+
+        SELECT
+        tag_id AS tagId,
+        tag_name AS tagName,
+        tag_description AS tagDescription,
+        tag_status AS tagStatus
+        FROM tag
+    </select>
+
+    <select id="getTagById" resultType="com.ccblog.pojo.vo.TagCustom">
+        SELECT
+        tag_id AS tagId,
+        tag_name AS tagName
+        FROM tag
+        WHERE
+        tag_id = #{id}
+    </select>
+
+    <select id="getAllTagsForEditorArticle" resultType="com.ccblog.pojo.vo.TagCustom">
+
+        SELECT
+        tag_id AS tagId,
+        tag_name AS tagName
+        FROM tag
+        WHERE
+        tag_status = 1
+    </select>
+</mapper>

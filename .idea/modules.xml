@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ccblog.iml" filepath="$PROJECT_DIR$/ccblog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ccblog-dao/ccblog-dao.iml" filepath="$PROJECT_DIR$/ccblog-dao/ccblog-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ccblog-interface/ccblog-interface.iml" filepath="$PROJECT_DIR$/ccblog-interface/ccblog-interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ccblog-pojo/ccblog-pojo.iml" filepath="$PROJECT_DIR$/ccblog-pojo/ccblog-pojo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ccblog-service/ccblog-service.iml" filepath="$PROJECT_DIR$/ccblog-service/ccblog-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ccblog-utils/ccblog-utils.iml" filepath="$PROJECT_DIR$/ccblog-utils/ccblog-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ccblog-web-admin/ccblog-web-admin.iml" filepath="$PROJECT_DIR$/ccblog-web-admin/ccblog-web-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ccblog-web-portal/ccblog-web-portal.iml" filepath="$PROJECT_DIR$/ccblog-web-portal/ccblog-web-portal.iml" />
+    </modules>
+  </component>
+</project>
