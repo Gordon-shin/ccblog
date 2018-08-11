@@ -83,7 +83,7 @@
                 <li><i class="fa fa-eye"></i> 浏览总量：${blogBaseInfo[5]} 次</li>
                 <li><i class="fa fa-pencil-square-o"></i> 最后更新：
                     <span style="color:#2F889A">
-                                         <fmt:formatDate value="${lastUpdateArticle.articleUpdateTime}" pattern="yyyy年MM月dd日"/>
+                                         <fmt:formatDate value="${lastUpdateArticle.articleUpdateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                                    </span>
                 </li>
             </ul>

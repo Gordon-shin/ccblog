@@ -312,6 +312,7 @@
 <script src="/js/assets/js/bootstrap.js" type="text/javascript"></script>
 <script src="/js/script.js"></script>
 <script src="/js/superfish.js"></script>
+<script src="/js/jquery.cookie.js"></script>
 <%--<script src="https://coding.net/u/ChandlerChai/p/ccblog-static-files/git/raw/master/ccblog-portal/js/jquery.min.js"></script>
 <script src="https://coding.net/u/ChandlerChai/p/ccblog-static-files/git/raw/master/ccblog-portal/js/assets/js/bootstrap.js" type="text/javascript"></script>
 <script src="https://coding.net/u/ChandlerChai/p/ccblog-static-files/git/raw/master/ccblog-portal/js/script.js"></script>
@@ -324,6 +325,7 @@
     });
 
     $(function () {
+        addVisitorViews();
         var nav = $("#menu-box"); //得到导航对象
         var win = $(window); //得到窗口对象
         var sc = $(document);//得到document文档对象。
@@ -354,6 +356,24 @@
             }, speed);
         });
     })
+    
+    //游客进入首页，记录到operatorLog里面一下 visitorViewIPOne visitorViewIPTwo
+    var visitorViewIPOne =  $.cookie("visitorViewIPOne")
+    function addVisitorViews() {
+        if ($.cookie("visitorViewIPTwo") != visitorViewIPOne || $.cookie("visitorViewIPTwo") == null) {
+            $.ajax({
+                url:"/addVisitorViews/"+visitorViewIPOne,
+                type:"GET",
+                success:function (data) {
+                    $.cookie("visitorViewIPTwo", visitorViewIPOne,//需要cookie写入的业务
+                        {
+                            "path": "/", //cookie的默认属性
+                        }
+                    );
+                }
+            })
+        }
+    }
 
 </script>
 <%--<script color="255,0,0" opacity='1' zIndex="-2" count="150" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>--%>

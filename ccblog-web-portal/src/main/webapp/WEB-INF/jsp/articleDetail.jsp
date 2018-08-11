@@ -197,7 +197,7 @@
                     <li></li>
                     <li><strong>版权声明：</strong>本站原创文章，于<fmt:formatDate
                             value="${articleDetailCustom.articlePostTime}"
-                            pattern="yyyy-MM-dd"/>，由
+                            pattern="yyyy-MM-dd HH:mm:ss"/>，由
                         <strong>
                             ${articleDetailCustom.user.userNickname}
                         </strong>
