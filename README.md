@@ -27,6 +27,5 @@
 * ### 前台地址：http://47.98.63.217:8080
 
 
-
 * ### 后台就放一张文章编辑页面把，我大路飞！
-![image](http://47.98.63.217/article_edit.png)
+![image](https://raw.githubusercontent.com/ChandlerChai/ccblog-static-files/master/article_edit.png)
