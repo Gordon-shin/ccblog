@@ -85,6 +85,7 @@
     <div id="content" class="site-content" style="transform: none;">
     <%--博客主体-左侧文章正文 start--%>
     <div id="primary" class="content-area">
+        <div id="contentPrint">
         <main id="main" class="site-main" role="main">
             <article class="post">
                 <header class="entry-header">
@@ -135,6 +136,11 @@
                                        href="/admin/article/edit/${articleDetailCustom.articleId}">编辑</a>
                                 </li>
                             </c:if>
+                            <li class="edit-link">
+                            <a href="javascript:printMe()" target="_self" style="height: 28px;" title="打印">
+                                <i class="fa fa-print fa-2x"></i>
+                            </a>
+                            </li>
                             <li class="comment">
                                 <a href="/article/${articleDetailCustom.articleId}#comments" style="text-decoration: none"
                                    rel="external nofollow">
@@ -213,7 +219,7 @@
                 <div class="clear"></div>
             </div>
             <%--版权声明 end--%>
-
+    </div>
 
             <%--上一篇下一篇 start--%>
             <nav class="nav-single">
@@ -529,7 +535,16 @@
             }
         }
 
-
+       // 打印
+       var global_Html = "";
+       function printMe() {
+           global_Html = document.body.innerHTML;
+           document.body.innerHTML = document.getElementById('contentPrint').innerHTML;
+           window.print();
+           window.setTimeout(function() {
+               document.body.innerHTML = global_Html;
+           }, 500);
+       }
 
        //ajax提交评论信息
        $("#comment_form").submit(function () {
