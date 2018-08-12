@@ -28,4 +28,4 @@
 
 
 * ### 后台就放一张文章编辑页面把，我大路飞！
-![image](https://raw.githubusercontent.com/ChandlerChai/ccblog-static-files/master/article_edit.png)
+![image](https://raw.githubusercontent.com/ChandlerChai/static-files/master/article_edit.png)
